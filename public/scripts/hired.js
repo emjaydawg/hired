@@ -23,3 +23,21 @@ var homeController = function($scope){
 var jobsController = function($scope) {
 	$scope.welcome = "Welcome to the jobs page!"
 }
+
+var canned_jobs_data = [
+	{
+		title: 'A title',
+		location: 'A location',
+		duration: 'A duration',
+		url:'URL',
+		description:'A description'
+	}
+]
+
+var jobsService = function() {
+	return {
+		getJobs: function() {
+			return canned_jobs_data;
+		}
+	}
+}
