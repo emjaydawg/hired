@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "node-static": "^0.7.7"
+  },
+  "devDependencies": {
+    "bower": "^1.7.7"
   }
 }

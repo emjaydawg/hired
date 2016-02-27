@@ -1,0 +1,22 @@
+{
+  "name": "hired",
+  "description": "for helping those in prison get a job",
+  "main": "index.js",
+  "license": "ISC",
+  "homepage": "https://github.com/FeminismIsAwesome/hired",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "bower": "*",
+    "install": "^1.0.4",
+    "angular-route": "^1.5.0"
+  }
+}
