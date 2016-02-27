@@ -32,7 +32,36 @@ var canned_jobs_data = [
 		url:'URL',
 		description:'A description'
 	}
+];
+
+var canned_resources_data = [
+	{
+
+	}
 ]
+
+var userProfileInformation = {
+	name: 'Name of user'
+}
+
+var resourcesService = function() {
+	return {
+		getResources: function() {
+			return canned_resources_data;
+		}
+	}
+}
+
+var userService = function() {
+	return {
+		getUser: function() {
+			return userProfileInformation;
+		},
+		setUser: function(user) {
+			userProfileInformation = user;
+		}
+	}
+}
 
 var jobsService = function() {
 	return {
