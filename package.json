@@ -11,6 +11,7 @@
   "dependencies": {
     "express": "^4.13.4",
     "jade": "^1.11.0",
+    "jade-static": "^1.1.2",
     "node-static": "^0.7.7"
   },
   "devDependencies": {
