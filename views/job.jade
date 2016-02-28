@@ -23,4 +23,9 @@ html
           span Candidate
           span #{job.qualification}
         br
-        .apply Apply
+        if applied
+          .applied
+            Already Applied
+        else
+          .apply
+            a(href='/job/' + jobid + aparams) Apply
