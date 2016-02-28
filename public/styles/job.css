@@ -1,0 +1,44 @@
+body {
+  max-width: 640px;
+}
+
+.selected_job h2, .job h2 {
+  display: block;
+  float: left;
+  width: auto;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.selected_job img, .job img {
+  width: 32px;
+  height: 32px;
+  float: right;
+}
+
+#jobs {
+  padding-left: 0px;
+  margin-left: 0px;
+  list-style-type: none;
+}
+
+.job {
+  clear: both;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.job_metatdata p {
+  text-align: right;
+}
+
+.selected_job_title {
+  clear: both;
+}
+
+.job_description h3 {
+  padding-left: 0px;
+}
+
+.pay {
+}

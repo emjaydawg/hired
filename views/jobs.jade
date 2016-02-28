@@ -1,0 +1,17 @@
+html
+  head
+    title= title
+    style
+      include ../public/styles/job.css
+  body
+    ul(id='jobs')
+      each job,index in jobs
+        li
+          .job
+            a(href='/job/' + index): h2= job.title
+            .job_metatdata
+              p= job.pay
+              if job.favorite
+                img(src='/resources/heart-icon.png')
+              else
+                img(src='/resources/black-heart-icon.png')

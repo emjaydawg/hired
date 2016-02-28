@@ -1,0 +1,23 @@
+html
+  head
+    title= title
+    style
+      include ../public/styles/job.css
+  body
+    .selected_job
+      .selected_job_title
+        h2= job.title
+        if job.favorite
+          img(src='/resources/heart-icon.png')
+        else
+          img(src='/resources/black-heart-icon.png')
+      br
+      .job_description
+        h3 Job Selection
+        .pay #{job.pay} per hour
+      br
+      .job_candidate
+        span Candidate
+        span #{job.qualification}
+      br
+      .apply Apply
