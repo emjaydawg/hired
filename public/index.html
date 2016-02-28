@@ -2,21 +2,29 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="styles/application.css">
-
+		<script src="scripts/jquery.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#menu-button").click(function(){
+					$("#menu").toggle();
+				})
+			});
+		</script>
 	</head>
-	<body>
-
-	Hello! I am a web page. This is what I've got served up.
-	<a href="/other.html">Link to other file :)</a>
-
-	You can also use <text class="custom-text"> custom text </text> too.
-
-	<ul class="list-group">
-	  <li class="list-group-item">You</li>
-	  <li class="list-group-item">Can</li>
-	  <li class="list-group-item">Use</li>
-	  <li class="list-group-item">Bootstrap</li>
-	  <li class="list-group-item">Too :)</li>
-	</ul>
+	<body class="container">
+		<div >
+			<button id="menu-button" class="btn btn-primary glyphicon glyphicon-th-list">
+			Menu
+			</button>
+		</div>
+		<ul id="menu" class="list-group" style="display:none;">
+		<li class="list-group-item">Jobs</li>
+		<li class="list-group-item"> Favorites</li>
+		<li class="list-group-item"> Help Center</li>
+		<li class="list-group-item"> Resume Builder</li>
+		<li class="list-group-item"> User Info</li>
+		<li class="list-group-item"> Application Status's</li>
+		<li class="list-group-item"> Call/ Text Options</li>
+		</ul> 
 	</body>
 </html>	
