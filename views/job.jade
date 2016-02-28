@@ -3,29 +3,46 @@ html
     title= title
     style
       include ../public/styles/job.css
-    include ../public/Menu_Button.html
+    include ../public/header.html
+    script(src="/scripts/job.js")
   body
     .container 
-      include ../public/Menu_list.html
+      .row
+        include ../public/menu_button.html
+      .row
+        include ../public/menu_list.html
       .selected_job
         .selected_job_title
           h2= job.title
-          if job.favorite
-            img(src='/resources/heart-icon.png')
-          else
-            img(src='/resources/black-heart-icon.png')
-        br
+          span.glyphicon.glyphicon-heart-empty
+
+        .job_location
+          div #{job.location}
+
+
         .job_description
-          h3 Job Selection
-          .pay #{job.pay} per hour
-        br
+          h3 Pay:
+          .pay
+            span.pay #{job.pay}
+            span per hour
+
+          h3 Job Description:
+          div !{job.description.replace(/\n/g, '<br/>')}
+
+
         .job_candidate
-          span Candidate
+          h3 Candidate
           span #{job.qualification}
-        br
+
+        .video
+          .icon
+            a
+              ="Video Description"
+              img(src="/youtube.png")
+
         if applied
-          .applied
-            Already Applied
+          .apply
+            button.btn.btn-lg.btn-success Applied
         else
           .apply
-            a(href='/job/' + jobid + aparams) Apply
+            a(href='/job/' + jobid + aparams): button.btn.btn-lg.btn-primary Apply

@@ -1,13 +1,29 @@
+
 body {
   max-width: 640px;
 }
 
+.selected_job_title {
+  margin 0 auto;
+  text-align: center;
+  font-size: 30px;
+  padding-bottom: 10px;
+  border-bottom: 5px solid #337ab7;
+}
 .selected_job h2, .job h2 {
-  display: block;
-  float: left;
+  display: inline;
   width: auto;
-  margin-top: 0px;
-  margin-bottom: 0px;
+}
+
+.selected_job_title .glyphicon {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 46px;
+  cursor: pointer;
+}
+
+.blue-heart {
+  color: blue;
 }
 
 .selected_job img, .job img {
@@ -16,29 +32,49 @@ body {
   float: right;
 }
 
+.job_location {
+  font-size: 25px;
+  margin-top: 20px;
+}
+
+span.pay {
+  font-size: 20px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
 #jobs {
-  padding-left: 0px;
-  margin-left: 0px;
   list-style-type: none;
 }
 
 .job {
-  clear: both;
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-.job_metatdata p {
-  text-align: right;
+.jobs li {
+  border: 1px;
 }
 
-.selected_job_title {
-  clear: both;
+.apply {
+  margin-top: 10px;
 }
 
-.job_description h3 {
-  padding-left: 0px;
+.apply button {
+  width: 100%;
+  margin: 0 auto;
+  display: block;
 }
 
-.pay {
+.video {
+  margin: 20px 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.video img {
+  width: 70px;
+  height: auto;
+  float: none;
+  margin-left: 20px;
 }

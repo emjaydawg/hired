@@ -3,19 +3,23 @@ html
     title= title
     style
       include ../public/styles/job.css 
-    include ../public/Menu_Button.html
+    include ../public/header.html
 
   body
     .container
-      include ../public/Menu_list.html
-      ul(id='jobs')
-        each job,index in jobs
-          li
-            .job
-              a(href='/job/' + index + qparams): h2= job.title
-              .job_metatdata
+      .row
+        include ../public/menu_button.html
+      .row
+        include ../public/menu_list.html
+        ul(id='jobs',class="list-group col-xs-9") 
+          each job,index in jobs
+            li.row(class="list-group-item")
+              .col-xs-10
+                a(href='/job/' + index ): h2= job.title
+              .col-xs-2
                 p= job.pay
                 if job.favorite
-                  img(src='/resources/heart-icon.png')
+                  i(class="glyphicon glyphicon-heart")
                 else
-                  img(src='/resources/black-heart-icon.png')
+                  i(class="glyphicon glyphicon-heart-empty heart")
+
