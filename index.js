@@ -39,7 +39,7 @@ function sanitize(jobs) {
   if (jobs == '')
     return [];
   if (typeof jobs === 'string')
-    return [jobs];
+    return jobs.split(',');
   return jobs;
 }
 
@@ -110,9 +110,17 @@ function mergeFavoriteAppliedFields(jobs, applied, favorites) {
 }
 
 function filterAppliedJobs(jobs, applied) {
+  if (applied.length == 0)
+    return [];
   var result = [];
-  for (app_index in applied) {
-    result.push(jobs[app_index]);
+  var filtAppIndices = applied[0].split(',');
+  console.log('filter applied jobs');
+  if (filtAppIndices.length <= applied.length)
+    filtAppIndices = applied;
+  for (var i = 0; i < filtAppIndices.length; i++) {
+    var index = filtAppIndices[i];
+    console.log('index: ' + index);
+    result.push(jobs[parseInt(index)]);
   }
   return result;
 }
@@ -161,6 +169,7 @@ app.get('/job/:jobid', function(request, response) {
     var appFavs = sanitizeQuery(request.query);
     var isFav = isFavorite(appFavs.favorited, request.params.jobid);
     var hasApp = hasApplied(appFavs.applied, request.params.jobid);
+    console.log('has applied(' + request.params.jobid + '): ' + hasApp);
     var defParams = makeQueryString(appFavs);
     menuLoader.fetchMenus(defParams, function(menus) {
       response.render('job', {

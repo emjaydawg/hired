@@ -15,7 +15,7 @@ html
           each job,index in jobs
             li.row(class="list-group-item")
               .col-xs-10
-                a(href='/job/' + index ): h2= job.title
+                a(href='/job/' + index + qparams ): h2= job.title
               .col-xs-2
                 p= job.pay
                 if job.favorite
