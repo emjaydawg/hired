@@ -3,10 +3,13 @@ html
     title= title
     style
       include ../public/styles/job.css
-    include ../public/Menu_Button.html
+    include ../public/header.html
   body
     .container 
-      include ../public/Menu_list.html
+      .row
+        include ../public/Menu_button.html
+      .row
+        include ../public/Menu_list.html
       .selected_job
         .selected_job_title
           h2= job.title
