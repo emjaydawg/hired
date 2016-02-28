@@ -18,6 +18,11 @@ body {
   display: inline-block;
   margin-left: 10px;
   font-size: 46px;
+  cursor: pointer;
+}
+
+.blue-heart {
+  color: blue;
 }
 
 .selected_job img, .job img {
