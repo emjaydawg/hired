@@ -1,13 +1,20 @@
 doctype html
 html
 	include ./includes/header.jade
-	body
+	body.container
 		a(href='/other.html') Link to other file :)
 		div
 			You can also use 
 			text.custom-text custom text
-		ul.list-group
-			li.list-group-item You
-			li.list-group-item Can
-			li.list-group-item Use
-			li.list-group-item Other Stuff Too
+		.row.row-grid.vertical-align
+			.col-xs-6 Item 1
+			.col-xs-2
+				button.btn.btn-primary Save
+		.row.row-grid
+			.col-xs-6.item.vcenter Item 2
+			.col-xs-2.vcenter
+				button.btn.btn-primary Save
+		.row.row-grid
+			.col-xs-6.item.vcenter Item 3
+			.col-xs-2.vcenter
+				button.btn.btn-primary Save

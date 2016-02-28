@@ -2,3 +2,16 @@
 	color:red;
 	font-size: 42px;
 }
+
+.row-grid:not(:first-child) {
+	margin-top: 15px;
+}
+
+.row-grid {
+	padding: 5px;
+	border: 1px solid black;
+}
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
