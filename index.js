@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var jadeStatic = require('jade-static');
 var jobLoader = require('./jobs.js');
+var menuLoader = require('./menu.js');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -108,21 +109,48 @@ function mergeFavoriteAppliedFields(jobs, applied, favorites) {
   return results;
 }
 
+function filterAppliedJobs(jobs, applied) {
+  var result = [];
+  for (app_index in applied) {
+    result.push(jobs[app_index]);
+  }
+  return result;
+}
+
 app.get('/', function(request, response) {
   response.render('pages/index');
+});
+
+app.get('/jobs/status', function(request, response) {
+  jobLoader.loadJobs(function(jobsJSON) {
+    console.log("loading applied jobs...");
+    var appFavs = sanitizeQuery(request.query);
+    var defParams = makeQueryString(appFavs);
+    menuLoader.fetchMenus(defParams, function(menus) {
+      console.log(menus);
+      response.render('app_status', {
+        title: "Jobs",
+        jobs: filterAppliedJobs(jobsJSON, appFavs.applied),
+        qparams:defParams,
+        menuitems: menus
+      });
+    });
+  });
 });
 
 app.get('/jobs/', function(request, response) {
   jobLoader.loadJobs(function(jobsJSON) {
     console.log("loading jobs...");
-    console.log(request.query);
     var appFavs = sanitizeQuery(request.query);
-    console.log('sanitized query');
-    console.log(appFavs);
-    response.render('jobs', {
-      title: "Jobs",
-      jobs: mergeFavoriteAppliedFields(jobsJSON, appFavs.applied, appFavs.favorited),
-      qparams:makeQueryString(request.query)
+    var defParams = makeQueryString(appFavs);
+    menuLoader.fetchMenus(defParams, function(menus) {
+      console.log(menus);
+      response.render('jobs', {
+        title: "Jobs",
+        jobs: mergeFavoriteAppliedFields(jobsJSON, appFavs.applied, appFavs.favorited),
+        qparams:defParams,
+        menuitems: menus
+      });
     });
   });
 });
@@ -133,13 +161,17 @@ app.get('/job/:jobid', function(request, response) {
     var appFavs = sanitizeQuery(request.query);
     var isFav = isFavorite(appFavs.favorited, request.params.jobid);
     var hasApp = hasApplied(appFavs.applied, request.params.jobid);
-    response.render('job', {
-      job: jobJSON,
-      jobid: request.params.jobid,
-      qparams:makeQueryString(appFavs),
-      favorite: isFav,
-      applied: hasApp,
-      aparams:makeQueryString(addApplied(appFavs, request.params.jobid)) 
+    var defParams = makeQueryString(appFavs);
+    menuLoader.fetchMenus(defParams, function(menus) {
+      response.render('job', {
+        job: jobJSON,
+        jobid: request.params.jobid,
+        qparams:defParams,
+        favorite: isFav,
+        applied: hasApp,
+        aparams:makeQueryString(addApplied(appFavs, request.params.jobid)),
+        menuitems: menus
+      });
     });
   });
 });

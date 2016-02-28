@@ -1,0 +1,22 @@
+html
+  head
+    title= title
+    style
+      include ../public/styles/job.css
+    include ../public/header.html
+    script(src="/scripts/job.js")
+  body
+    .container 
+      .row
+        include ../public/menu_button.html
+      .row
+        include ../public/menu_list.html
+        .col-xs-9
+          ul.list-group
+            each job in jobs
+              li.list-group-item.h2.center-right.row Application Status
+              li.list-group-item.center-left.row.application-status
+                .col-xs-7 #{job.title}
+                .col-xs-5.status
+                  .row 2 hours ago
+                  .row Pending...
