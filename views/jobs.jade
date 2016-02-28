@@ -8,7 +8,7 @@ html
       each job,index in jobs
         li
           .job
-            a(href='/job/' + index): h2= job.title
+            a(href='/job/' + index + qparams): h2= job.title
             .job_metatdata
               p= job.pay
               if job.favorite

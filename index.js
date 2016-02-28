@@ -1,21 +1,5 @@
 // var static = require('node-static');
 
-
-// //
-// // Create a node-static server instance to serve the './public' folder
-// //
-// var file = new static.Server('./public');
-
-// require('http').createServer(function (request, response) {
-//     request.addListener('end', function () {
-//         //
-//         // Serve files!
-//         //
-//         file.serve(request, response);
-//     }).resume();
-// }).listen(process.env.PORT || 5000);
-
-
 var express = require('express');
 var app = express();
 var jadeStatic = require('jade-static');
@@ -32,6 +16,20 @@ app.use('/styles', express.static(__dirname + '/styles'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
+function makeQueryString(params) {
+  console.log(params);
+  var result = "?";
+  var keys = Object.keys(params);
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    if (i > 0)
+      result += "&";
+    result += key + "=" + params[key];
+  }
+
+  return result;
+}
+
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
@@ -39,22 +37,15 @@ app.get('/', function(request, response) {
 app.get('/jobs/', function(request, response) {
   jobLoader.loadJobs(function(jobsJSON) {
     console.log("loading jobs...");
-    response.render('jobs', {title: "Jobs", jobs: jobsJSON});
+    response.render('jobs', {title: "Jobs", jobs: jobsJSON, qparams:makeQueryString(request.query)});
   });
+  console.log(makeQueryString(request.query));
 });
 
 app.get('/job/:jobid', function(request, response) {
   jobLoader.loadJob(request.params.jobid, function(jobJSON) {
     console.log('loading job[' + request.params.jobid + ']...');
-    response.render('job', {job: jobJSON});
-    /*
-    response.render('job', {
-      title: jobJSON.title,
-      description:jobJSON.description,
-      location:jobJSON.location,
-      pay:jobJSON.pay,
-      employment:jobJSON.employment});
-    */
+    response.render('job', {job: jobJSON, qparams:makeQueryString(request.query)});
   });
 });
 
