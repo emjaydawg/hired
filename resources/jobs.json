@@ -5,6 +5,7 @@
     "location": "Oakland",
     "pay": "$25",
     "employment": "Full Time",
+    "favorite": true,
     "qualification": "Literally anyone."
   },
   {
