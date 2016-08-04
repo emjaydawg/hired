@@ -1,0 +1,6 @@
+{
+  "production": {
+    "host": "107.170.211.108",
+    "username": "deploy"
+  }
+}

@@ -1,3 +1,11 @@
 ul(id="menu" class="list-group col-xs-9" style="display:none;")
+  if user
+    li(class="list-group-item"): h2 Hello #{user.name}
+    li(class="list-group-item")
+      form(action="/users/logout" method="post")
+        button(type="submit") Logout
+  else
+    li(class="list-group-item"): a(href="/users/login") Login
+    li(class="list-group-item"): a(href="/users/register") Register
   each item in menuitems
     li(class="list-group-item"): a(href=item.url) #{item.title}

@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "ian.norris",
+    "password": null,
+    "database": "hired_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "ian",
+    "password": null,
+    "database": "hired_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgres"
+  }
+}

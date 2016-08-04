@@ -5,6 +5,12 @@ var app = express();
 var jadeStatic = require('jade-static');
 var jobLoader = require('./jobs.js');
 var menuLoader = require('./menu.js');
+var bodyParser     =        require("body-parser");
+var expressSession = require('express-session');
+var cookieParser = require('cookie-parser'); // the session is stored in a cookie, so we use this to parse it
+
+
+
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -12,6 +18,10 @@ app.use(express.static(__dirname + '/public'));
 app.use(jadeStatic(__dirname + '/public'));
 app.use('/resources', express.static(__dirname + '/resources'));
 app.use('/styles', express.static(__dirname + '/styles'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(expressSession({secret:'somesecrettokenhere'}));
+app.use(cookieParser());
 
 // views is directory for all template files
 app.set('views', __dirname + '/views');
@@ -125,11 +135,66 @@ function filterAppliedJobs(jobs, applied) {
   return result;
 }
 
+var models = require('./server/models/index');
+
+app.get('/users/register', function(request, response) {
+  response.render('register');
+});
+
+app.post('/users/login', function(req, response) {
+  var sess = req.session;
+  return models.User.findOne({where: {
+   username: req.body.username,
+   password: req.body.password
+  }}).then(function(user) {
+    if(user) {
+      sess.user = user;
+      response.redirect('/');  
+    }
+    else {
+      response.render('login', {
+         error: 'incorrect username or password'
+      });
+    }
+    
+  })
+
+  response.render('jobs');
+})
+
+app.post('/users/logout', function(req, response) {
+  var sess = req.session;
+  sess.user = undefined;
+  req.session.destroy(function(err) {
+    // cannot access session here
+  })
+  response.redirect('/');
+})
+
+app.get('/users/login', function(request, response) {
+  response.render('login');
+});
+
+app.post('/users/create', function(req, response) {
+    var sess = req.session;
+  return models.User.findOrCreate({
+    name: req.body.name,
+    username: req.body.username,
+    password: req.body.password
+  }).then(function(createdUser, _) {
+    sess.user = createdUser;
+    response.redirect('/');
+  });
+});
+
 app.get('/', function(request, response) {
-  response.render('pages/index');
+  var sess = request.session;
+
+  response.render('pages/index', {user: sess.user});
 });
 
 app.get('/jobs/status', function(request, response) {
+    var sess = request.session;
   jobLoader.loadJobs(function(jobsJSON) {
     console.log("loading applied jobs...");
     var appFavs = sanitizeQuery(request.query);
@@ -140,13 +205,15 @@ app.get('/jobs/status', function(request, response) {
         title: "Jobs",
         jobs: filterAppliedJobs(jobsJSON, appFavs.applied),
         qparams:defParams,
-        menuitems: menus
+        menuitems: menus,
+        user: sess.user
       });
     });
   });
 });
 
 app.get('/jobs/', function(request, response) {
+  var sess = request.session;
   jobLoader.loadJobs(function(jobsJSON) {
     console.log("loading jobs...");
     var appFavs = sanitizeQuery(request.query);
@@ -157,13 +224,15 @@ app.get('/jobs/', function(request, response) {
         title: "Jobs",
         jobs: mergeFavoriteAppliedFields(jobsJSON, appFavs.applied, appFavs.favorited),
         qparams:defParams,
-        menuitems: menus
+        menuitems: menus,
+        user: sess.user
       });
     });
   });
 });
 
 app.get('/job/:jobid', function(request, response) {
+  var sess = request.session;
   jobLoader.loadJob(request.params.jobid, function(jobJSON) {
     console.log('loading job[' + request.params.jobid + ']...');
     var appFavs = sanitizeQuery(request.query);
@@ -179,7 +248,8 @@ app.get('/job/:jobid', function(request, response) {
         favorite: isFav,
         applied: hasApp,
         aparams:makeQueryString(addApplied(appFavs, request.params.jobid)),
-        menuitems: menus
+        menuitems: menus,
+        user: sess.user
       });
     });
   });
