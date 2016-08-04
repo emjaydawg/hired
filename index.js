@@ -177,7 +177,7 @@ app.get('/users/login', function(request, response) {
 
 app.post('/users/create', function(req, response) {
     var sess = req.session;
-  return models.User.findOrCreate({
+  return models.User.create({
     name: req.body.name,
     username: req.body.username,
     password: req.body.password
